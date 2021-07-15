@@ -1,6 +1,6 @@
 Linux自旋锁的主要操作：
 （1）定义自旋锁：	spinlock_t lock;
-（2）初始化自旋锁：	spin_lock_init(lock)
+（2）初始化自旋锁：spin_lock_init(lock)
 （3）获取自旋锁：	spin_lock(lock)	spin_trylock(lock) 	//后者非原地自旋，会返回false
 （4）释放自旋锁：	spin_unlock(lock)
 
@@ -34,6 +34,8 @@ spin_lock_irqsave（）/spin_unlock_irqrestore（）
 
 读写自旋锁（rwlock）
 基本原理：读写自旋锁是一种比自旋锁粒度更小的锁机制，它保留了“自旋”的概念，但是在写操作方面，只能最多有1个写进程，在读操作方面，同时可以有多个读执行单元。当然，读和写也不能同时进行。
+允许多个读者同时进入临界区； 读者与写者不能同时进入临界区（读者与写者互斥）；写者与写者不能同时进入临界区（写者与写者互斥）；
+其和读写信号量的区别在于：后者可能会发生睡眠，进而带来进程切换的开销
 
 定义和初始化读写自旋锁
 rwlock_t my_rwlock;
